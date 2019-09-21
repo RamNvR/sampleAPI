@@ -1,0 +1,22 @@
+{
+  "name": "sampleapi",
+  "version": "1.0.0",
+  "description": "Sample REST API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RamNvR/sampleAPI.git"
+  },
+  "author": "NvR",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RamNvR/sampleAPI/issues"
+  },
+  "homepage": "https://github.com/RamNvR/sampleAPI#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
