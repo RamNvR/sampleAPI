@@ -20,18 +20,22 @@ router.post('/createProject', celebrate({
         createdOn: Joi.string().required()
     })
 }), errors(), (req, res) => {
-    const payload = req.body;
+    let payload = req.body;
+    payload.author = req.get('Authorization');
     let project = new Project(payload);
     project.save().then(result => {
         console.log(result);
         res.status(200).json({
             status: 200
         });
+    }).catch(err => {
+        console.log(err);
     });
 });
 
 router.get('/listProjects', (_req, res) => {
-    Project.find({}, (err, docs) => {
+    let author = req.get('Authorization');
+    Project.find({ "author": author }, (err, docs) => {
         if (err) res.status(500).json({
             status: 500
         });
@@ -40,15 +44,23 @@ router.get('/listProjects', (_req, res) => {
             result: docs,
             status: 200
         });
+    }).catch(err => {
+        console.log(err);
     });
 });
 
-router.delete('/delete', (req, res) => {
+router.delete('/delete', celebrate({
+    query: Joi.object().keys({
+        id: Joi.string().min(10).required()
+    })
+}), errors(), (req, res) => {
     Project.remove({ "_id": req.query.id }, (err, result) => {
         if (err) res.status(500).json({ status: 500 });
         console.log(result);
         res.status(200).json({ status: 200 });
-    })
+    }).catch(err => {
+        console.log(err);
+    });
 })
 
 router.post('/updateProject', celebrate({
@@ -61,13 +73,16 @@ router.post('/updateProject', celebrate({
         createdOn: Joi.string().required()
     })
 }), (req, res) => {
-    Project.updateOne({ "_id": req.body.id }, req.body, (err, doc) => {
+    let payload = req.body;
+    Project.updateOne({ "_id": payload.id }, payload, (err, doc) => {
         if (err) res.status(500).json({ status: 500 });
         console.log(doc);
         res.status(200).json({
             result: doc,
             status: 200
         });
+    }).catch(err => {
+        console.log(err);
     });
 });
 
