@@ -16,7 +16,7 @@ router.post('/createProject', celebrate({
         project_name: Joi.string().required(),
         description: Joi.string().required(),
         author: Joi.string().required(),
-        type: Joi.string().required(),
+        type: Joi.string().default('type1'),
         createdOn: Joi.string().required()
     })
 }), errors(), (req, res) => {
