@@ -21,7 +21,6 @@ router.post('/createProject', celebrate({
     })
 }), errors(), (req, res) => {
     let payload = req.body;
-    payload.author = req.get('Authorization');
     let project = new Project(payload);
     project.save().then(result => {
         console.log(result);
@@ -32,8 +31,7 @@ router.post('/createProject', celebrate({
 });
 
 router.get('/listProjects', (_req, res) => {
-    let author = req.get('Authorization');
-    Project.find({ "author": author }, (err, docs) => {
+    Project.find({}, (err, docs) => {
         if (err) res.status(500).json({
             status: 500
         });
