@@ -1,0 +1,65 @@
+const router = require('express').Router();
+const Project = require('../models/Project');
+const { celebrate, Joi, errors } = require('celebrate');
+
+router.post('/createProject', celebrate({
+    body: Joi.object().keys({
+        project_name: Joi.string().required(),
+        description: Joi.string().required(),
+        author: Joi.string().required(),
+        type: Joi.string().required(),
+        createdOn: Joi.string().required()
+    })
+}), errors(), (req, res) => {
+    const payload = req.body;
+    let project = new Project(payload);
+    project.save().then(result => {
+        console.log(result);
+        res.status(200).json({
+            status: 200
+        });
+    });
+});
+
+router.get('/listProjects', (_req, res) => {
+    Project.find({}, (err, docs) => {
+        if (err) res.status(500).json({
+            status: 500
+        });
+        console.log(docs);
+        res.status(200).json({
+            result: docs,
+            status: 200
+        });
+    });
+});
+
+router.delete('/delete', (req, res) => {
+    Project.remove({ "_id": req.query.id }, (err, result) => {
+        if (err) res.status(500).json({ status: 500 });
+        console.log(result);
+        res.status(200).json({ status: 200 });
+    })
+})
+
+router.post('/updateProject', celebrate({
+    body: Joi.object().keys({
+        id: Joi.string().required(),
+        project_name: Joi.string().required(),
+        description: Joi.string().required(),
+        author: Joi.string().required(),
+        type: Joi.string().default('type1'),
+        createdOn: Joi.string().required()
+    })
+}), (req, res) => {
+    Project.updateOne({ "_id": req.body.id }, req.body, (err, doc) => {
+        if (err) res.status(500).json({ status: 500 });
+        console.log(doc);
+        res.status(200).json({
+            result: doc,
+            status: 200
+        });
+    });
+});
+
+module.exports = router;
