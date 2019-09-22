@@ -55,8 +55,6 @@ router.post('/login', celebrate({
                 else res.status(403).json({
                     status: 403
                 });
-            }).catch(err => {
-                console.log(err);
             });
         } catch (error) {
             console.log(error);

@@ -28,8 +28,6 @@ router.post('/createProject', celebrate({
         res.status(200).json({
             status: 200
         });
-    }).catch(err => {
-        console.log(err);
     });
 });
 
@@ -44,8 +42,6 @@ router.get('/listProjects', (_req, res) => {
             result: docs,
             status: 200
         });
-    }).catch(err => {
-        console.log(err);
     });
 });
 
@@ -58,8 +54,6 @@ router.delete('/delete', celebrate({
         if (err) res.status(500).json({ status: 500 });
         console.log(result);
         res.status(200).json({ status: 200 });
-    }).catch(err => {
-        console.log(err);
     });
 })
 
@@ -81,8 +75,6 @@ router.post('/updateProject', celebrate({
             result: doc,
             status: 200
         });
-    }).catch(err => {
-        console.log(err);
     });
 });
 
