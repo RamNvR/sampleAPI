@@ -3,7 +3,6 @@ const app = express();
 const port = process.argv[2] || 8080;
 const auth = require('./routes/authRoutes');
 const project = require('./routes/project');
-
 const config = require('./config/mongo');
 const bodyParser = require('body-parser');
 require('mongoose').connect(config.conn, {

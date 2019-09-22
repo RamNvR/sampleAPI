@@ -1,5 +1,14 @@
 const router = require('express').Router();
-const Project = require('../models/Project');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const ProjectSchema = new Schema({
+    project_name: String,
+    description: String,
+    author: String,
+    type: String,
+    createdOn: String
+});
+const Project = mongoose.model('project', ProjectSchema);
 const { celebrate, Joi, errors } = require('celebrate');
 
 router.post('/createProject', celebrate({
