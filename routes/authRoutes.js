@@ -47,18 +47,14 @@ router.post('/login', celebrate({
     User.find({ "username": req.body.username }, (err, doc) => {
         if (err) res.status(500).json({ status: 500 });
         console.log(doc[0]);
-        try {
-            bcrypt.compare(req.body.password, doc[0].password, (err, isOk) => {
-                if (err) res.status(500).json({ status: 500 });
-                console.log(isOk)
-                if (isOk) res.status(200).json({ status: 200 });
-                else res.status(403).json({
-                    status: 403
-                });
+        bcrypt.compare(req.body.password, doc[0].password, (err, isOk) => {
+            if (err) res.status(500).json({ status: 500 });
+            console.log(isOk)
+            if (isOk) res.status(200).json({ status: 200 });
+            else res.status(403).json({
+                status: 403
             });
-        } catch (error) {
-            console.log(error);
-        }
+        });
     });
 });
 
