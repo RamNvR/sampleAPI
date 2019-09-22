@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = process.argv[2] || process.env.PORT || 8080;
+const port = process.argv[2] || 8080;
 const auth = require('./routes/authRoutes');
 const project = require('./routes/project');
 
